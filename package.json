@@ -1,0 +1,31 @@
+{
+  "name": "switch-qa-23-5-acceptance_tests",
+  "type": "module",
+  "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "@types/node": "^20.10.4",
+    "@wdio/allure-reporter": "^8.24.12",
+    "@wdio/cli": "^8.26.0",
+    "@wdio/cucumber-framework": "^8.24.13",
+    "@wdio/devtools-service": "^8.26.0",
+    "@wdio/local-runner": "^8.26.0",
+    "@wdio/spec-reporter": "^8.24.12",
+    "ts-node": "^10.9.2",
+    "tslog": "^3.3.4",
+    "typescript": "^5.3.3",
+    "wdio-docker-service": "^3.2.1",
+    "wdio-vscode-service": "^5.2.2",
+    "wdio-wait-for": "^3.0.9"
+  },
+  "scripts": {
+    "wdio": "wdio run ./wdio.conf.ts"
+  },
+  "dependencies": {
+    "@wdio/browser-runner": "^8.26.0",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "moment": "^2.29.4",
+    "mysql2": "^3.6.5",
+    "tslog": "^4.9.2"
+  }
+}
