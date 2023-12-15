@@ -1,4 +1,5 @@
 import { $, $$ } from '@wdio/globals'
+import LoginPage from './loginpage.ts'
 import Page from './page.js';
 
 /**
@@ -30,13 +31,15 @@ class PostPage extends Page {
      * e.g. to posts
      */
     public async openPostPopular () {
+        await this.open()
+        await this.postPopularFilter.waitForDisplayed();
         await this.postPopularFilter.click();
     }
 
     /**
      * overwrite specific options to adapt it to page object
      */
-    public open () {
+    public async open () {
         return super.open('');
     }
 }

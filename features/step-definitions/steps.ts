@@ -77,8 +77,7 @@ BeforeAll(async () => {
 
 // Global Steps
 Given(/^I am on the (\w+) page$/, async (page) => {
-    await pages[page].open()
-
+    await pages[page].open(user.email,user.password)
 });
 
 // When(/^I login$/, async () => {
@@ -92,13 +91,14 @@ Given(/^I am on the (\w+) page$/, async (page) => {
 
 //Post Popular Steps
 When(/^I view the popular posts$/, async () => {
+    await LoginPage.open()
+    await LoginPage.login(user.username, user.password)
     await PostPage.openPostPopular();
 });
 
 Then(/^I should see the posts older than five day with the date in red$/, async () => {
     //We use the points to assurence the post created more than 5 days ago is the first
     await expect((await PostPage.dateCreateFirstPost)).toHaveStyle({"color":"rgba(255,0,0,1)"})
-    await browser.debug()
 });
 
 // Then(/^I should see the posts created five days ago with the date in default color$/, async () => {
