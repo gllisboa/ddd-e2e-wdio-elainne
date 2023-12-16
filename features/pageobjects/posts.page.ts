@@ -31,8 +31,6 @@ class PostPage extends Page {
      * e.g. to posts
      */
     public async openPostPopular () {
-        await this.open()
-        await this.postPopularFilter.waitForDisplayed();
         await this.postPopularFilter.click();
     }
 

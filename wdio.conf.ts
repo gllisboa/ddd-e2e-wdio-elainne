@@ -1,6 +1,17 @@
 import type { Options } from '@wdio/types'
 import * as dotenv from 'dotenv';
+import { faker } from '@faker-js/faker';
 dotenv.config()
+var user = {
+    username: `${faker.internet.userName()}`.substring(0,9),
+    email: `${faker.internet.email()}`,
+    password: `${faker.internet.password()}`
+}
+declare global {
+    var lastMemberLogged : object
+}
+
+global.lastMemberLogged = user;
 export const config: Options.Testrunner = {
     //
     // ====================
@@ -140,7 +151,7 @@ export const config: Options.Testrunner = {
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ["features/step-definitions/steps.ts"],
+        require: ["features/step-definitions/*.ts"],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
