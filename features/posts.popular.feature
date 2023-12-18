@@ -5,6 +5,7 @@ Feature: Posts popular
     Given I am on the postsPopular page
     And   I login with member
     When  I view the popular posts
+
   @popular
   Scenario Outline: As a user, I whant view posts older than five days, with the date in red
     Then I should see the posts older than five day with the date in red

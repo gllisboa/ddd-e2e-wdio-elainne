@@ -13,6 +13,7 @@ const pages = {
 }
 
 BeforeAll(async () => {
+    await browser.pause(2000)
     // Create user
         var responseCreateUserApi = await usersAPI.post(user.username, user.email, user.password)
         expect(responseCreateUserApi.status).toBe(200)

@@ -28,6 +28,7 @@ const posts = [
 
 Before({tags: "@popular"},async () => {
 
+    await browser.pause(2000)
     //    Get user base and member ID on DATABASE
     let dataUser = await UsersDataBase.getUsersIDsByEmail(user.email)
     expect(dataUser[0]).not.toBeUndefined()
@@ -43,6 +44,7 @@ Before({tags: "@popular"},async () => {
     expect(responseLoginUsersAPI.status).toBe(200)
     let { accessToken } = responseLoginUsersAPI.data
 
+    await browser.pause(2000)
     //    Clear all posts in the forum
     let responseDeleteAllPosts = await PostsDataBase.deleteAllPosts()
     expect(responseDeleteAllPosts).not.toBeUndefined()
@@ -89,6 +91,8 @@ Before({tags: "@popular"},async () => {
     dateToUpdate = moment().subtract(4, "days").format("YYYY-MM-DD hh:mm:ss") // Update to be in the limit of the validation to the date be red
     responseUpdatePosts = await PostsDataBase.updatePostsDateCreate({ member_id, title: posts[1].title }, dateToUpdate)
     expect(responseUpdatePosts).not.toBeUndefined()
+
+    // The third post is not necessary update because we want the data like today and the 0 points will assurence that post wiil be the third in the list of popular
 })
 
 //Post Popular Steps

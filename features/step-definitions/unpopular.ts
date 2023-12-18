@@ -36,6 +36,7 @@ const posts = [
 
 Before({tags: "@unpopular"},async () => {
     //    Get user base and member ID on DATABASE
+    await browser.pause(2000)
     let dataUser = await UsersDataBase.getUsersIDsByEmail(user.email)
     expect(dataUser[0]).not.toBeUndefined()
 
@@ -50,6 +51,7 @@ Before({tags: "@unpopular"},async () => {
     expect(responseLoginUsersAPI.status).toBe(200)
     let { accessToken } = await responseLoginUsersAPI.data
 
+    await browser.pause(2000)
     //    Clear all posts in the forum
     let responseDeleteAllPosts = await PostsDataBase.deleteAllPosts()
     expect(responseDeleteAllPosts).not.toBeUndefined()
@@ -97,8 +99,6 @@ Before({tags: "@unpopular"},async () => {
         "text",
         posts[4].textContent
     )
-    expect(responseCreatePost.status).toBe(200)
-
     expect(responseCreatePost.status).toBe(200)
 
     //  Update number of point of the first post to assurence thats will be the first post of Unpopular
@@ -149,7 +149,9 @@ Then(/^Unpopular posts should be automatically sorted in ascending order by numb
 });
 
 Then(/^Unpopular posts with the same number of votes should be sorted in order of publication, with the most recent being displayed first$/, async () => {
+    // I update in the before the date of the post[4] to be more older
     expect(await UnpopularPostPage.titleFourthPost).toHaveValue(posts[3].title)
+    // How the post[4] is more he should be the last
     expect(await UnpopularPostPage.titleFifthPost).toHaveValue(posts[4].title)
 });
 

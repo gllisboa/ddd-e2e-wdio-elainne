@@ -96,7 +96,7 @@ export default class Posts extends AEndpoint {
     return this.restClient.sendGet(requestConfig);
   }
 
-  //Upvote a post 
+  //Upvote a post
   public async upvotePost(accessToken: string, slug: string): Promise<AxiosResponse> {
     return this.restClient.sendPost({
       route: "/upvote",
