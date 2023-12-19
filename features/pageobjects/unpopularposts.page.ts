@@ -46,6 +46,7 @@ class UnpopularPostPage extends Page {
      * e.g. to posts
      */
     public async openPostUnpopular () {
+        await this.postUnpopularFilter.waitForClickable();
         await this.postUnpopularFilter.click();
     }
 

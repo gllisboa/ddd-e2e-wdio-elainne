@@ -1,4 +1,5 @@
 
+@popular
 Feature: Posts popular
 
   Background: User Login a
