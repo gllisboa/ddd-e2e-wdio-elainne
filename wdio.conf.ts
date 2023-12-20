@@ -1,11 +1,10 @@
 import type { Options } from '@wdio/types'
 import * as dotenv from 'dotenv';
-import { faker } from '@faker-js/faker';
 dotenv.config()
 var user = {
-    username: `${faker.internet.userName()}`.substring(0,9),
-    email: `${faker.internet.email()}`,
-    password: `${faker.internet.password()}`
+    username: `elainnec321`,
+    email: `elainne.cristina+e2e2@gmail.com`,
+    password: `dddelainne123`
 }
 declare global {
     var lastMemberLogged : object

@@ -28,7 +28,6 @@ const posts = [
 
 Before({tags: "@popular"},async () => {
 
-    await browser.pause(2000)
     //    Get user base and member ID on DATABASE
     let dataUser = await UsersDataBase.getUsersIDsByEmail(user.email)
     expect(dataUser[0]).not.toBeUndefined()
@@ -44,7 +43,6 @@ Before({tags: "@popular"},async () => {
     expect(responseLoginUsersAPI.status).toBe(200)
     let { accessToken } = responseLoginUsersAPI.data
 
-    await browser.pause(2000)
     //    Clear all posts in the forum
     let responseDeleteAllPosts = await PostsDataBase.deleteAllPosts()
     expect(responseDeleteAllPosts).not.toBeUndefined()

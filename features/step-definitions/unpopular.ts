@@ -36,7 +36,6 @@ const posts = [
 
 Before({tags: "@unpopular"},async () => {
     //    Get user base and member ID on DATABASE
-    await browser.pause(2000)
     let dataUser = await UsersDataBase.getUsersIDsByEmail(user.email)
     expect(dataUser[0]).not.toBeUndefined()
 
@@ -51,7 +50,6 @@ Before({tags: "@unpopular"},async () => {
     expect(responseLoginUsersAPI.status).toBe(200)
     let { accessToken } = await responseLoginUsersAPI.data
 
-    await browser.pause(2000)
     //    Clear all posts in the forum
     let responseDeleteAllPosts = await PostsDataBase.deleteAllPosts()
     expect(responseDeleteAllPosts).not.toBeUndefined()
@@ -131,6 +129,7 @@ Before({tags: "@unpopular"},async () => {
 //Post Unpopular Steps
 When(/^I view the unpopular posts$/, async () => {
     await UnpopularPostPage.openPostUnpopular();
+    await browser.pause(2000)
 });
 
 Then(/^I must be able to see the number of votes for each post$/, async () => {
