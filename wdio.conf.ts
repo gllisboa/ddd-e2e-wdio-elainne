@@ -1,16 +1,35 @@
-import type { Options } from '@wdio/types'
+import type { Options } from '@wdio/types';
 import * as dotenv from 'dotenv';
+import PostsDataBase from './database/posts.database.ts';
+import UsersAPI from './api/Users.ts';
+import SetupPopularFive from './features/setup/popularfive.setup.ts'
+import SetupUnpopular from './features/setup/unpopular.setup.ts'; // Import the SetupUnpopular class
+
+// We create a object to can be use in the before hook in the wdio config
+const SetupFeature: { [key: string]: any } = {
+    "@popular": SetupPopularFive,
+    "@unpopular": SetupUnpopular
+};
+
+// Get the environment variables from.env file
 dotenv.config()
+
+// Create a user to be use in all tests
 var user = {
-    username: `elainnec321`,
-    email: `elainne.cristina+e2e2@gmail.com`,
-    password: `dddelainne123`
-}
-declare global {
-    var lastMemberLogged : object
+    username: `elainnec12345`,
+    email: `elainnec12345@gmail.com`,
+    password: `elainnec12345`
 }
 
+// Create a global variable to can be use in all tes
+declare global {
+    var lastMemberLogged : {username: string, email:string, password:string},
+    unpopularPosts: {title: string, textContent: string}[]
+}
+
+// Set the user in the global variable
 global.lastMemberLogged = user;
+
 export const config: Options.Testrunner = {
     //
     // ====================
@@ -225,8 +244,14 @@ export const config: Options.Testrunner = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
-    // },
+     before: async function (capabilities, specs) {
+        let usersAPI = await new UsersAPI()
+        let responseCreateUserApi = await usersAPI.post(user.username, user.email, user.password)
+        expect(responseCreateUserApi.status).not.toBeGreaterThanOrEqual(500)
+        let deleteAllResult = await PostsDataBase.deleteAllPosts()
+        expect(deleteAllResult).not.toBeUndefined()
+
+    },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {string} commandName hook command name
@@ -241,8 +266,14 @@ export const config: Options.Testrunner = {
      * @param {string}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // beforeFeature: function (uri, feature) {
-    // },
+    beforeFeature: async function (uri, feature) {
+        console.log("Before Feature")
+        console.log(feature.tags[0].name)
+        let setupFeature = await SetupFeature[`${feature.tags[0].name}`]
+        setupFeature = await new setupFeature(user)
+        await setupFeature.setup()
+
+    },
     /**
      *
      * Runs before a Cucumber Scenario.
@@ -291,9 +322,13 @@ export const config: Options.Testrunner = {
      * @param {string}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // afterFeature: function (uri, feature) {
-    // },
-    
+     afterFeature: async function (uri, feature) {
+        console.log("After Feature")
+        console.log(feature.tags[0].name)
+        let deleteAllResult = await PostsDataBase.deleteAllPosts()
+        expect(deleteAllResult).not.toBeUndefined()
+     },
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name

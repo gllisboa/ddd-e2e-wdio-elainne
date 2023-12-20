@@ -1,36 +1,17 @@
-import {
-  Given,
-  When,
-  Then,
-  BeforeAll,
-  AfterAll,
-} from "@wdio/cucumber-framework";
-import { expect, browser } from "@wdio/globals";
-import LoginPage from "../pageobjects/loginpage.js";
-import PostPage from "../pageobjects/posts.page.js";
-import UnpopularPage from "../pageobjects/unpopularposts.page.ts";
-import UsersAPI from "../../api/Users.ts";
-import PostsDataBase from "../../database/posts.database.ts";
-const usersAPI = new UsersAPI();
-const user = global.lastMemberLogged;
+import { Given, When, Then, BeforeAll, AfterAll, Before } from '@wdio/cucumber-framework';
+import { expect, browser } from '@wdio/globals'
+import LoginPage from '../pageobjects/loginpage.js';
+import PostPage from '../pageobjects/postsfive.page.js';
+import UnpopularPage from '../pageobjects/unpopularposts.page.ts';
+
+// Get a user global this user is created in each run in the wdio config to can be use in all tests
+const user = global.lastMemberLogged
+
 const pages = {
-  login: LoginPage,
-  postsPopular: PostPage,
-  unpopular: UnpopularPage,
-};
-
-BeforeAll(async () => {
-  // Create user
-  var responseCreateUserApi = await usersAPI.post(
-    user.username,
-    user.email,
-    user.password
-  );
-
-  //    Clear all posts in the forum
-  let responseDeleteAllPosts = await PostsDataBase.deleteAllPosts();
-  expect(responseDeleteAllPosts).not.toBeUndefined();
-});
+    login: LoginPage,
+    postsPopular: PostPage,
+    unpopular: UnpopularPage
+}
 
 //Global Steps
 Given(/^I am on the (\w+) page$/, async (page) => {
