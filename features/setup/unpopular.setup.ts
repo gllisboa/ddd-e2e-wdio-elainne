@@ -63,11 +63,6 @@ export default class SetupUnpopular {
         expect(responseLoginUsersAPI.status).toBe(200)
         let { accessToken } = await responseLoginUsersAPI.data
 
-
-        //    Clear all posts in the forum
-        let responseDeleteAllPosts = await PostsDataBase.deleteAllPosts()
-        expect(responseDeleteAllPosts).not.toBeUndefined()
-
         //    Create 5 Post
         // This post will be the first on the unpopularlist
         let responseCreatePost = await postsAPI.createPost(

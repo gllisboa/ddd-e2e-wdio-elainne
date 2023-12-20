@@ -51,10 +51,6 @@ export default class SetupPopularFive {
         expect(responseLoginUsersAPI.status).toBe(200)
         let { accessToken } = responseLoginUsersAPI.data
 
-        //    Clear all posts in the forum
-        let responseDeleteAllPosts = await PostsDataBase.deleteAllPosts()
-        expect(responseDeleteAllPosts).not.toBeUndefined()
-
         //    Create Tree Post to be the first, second and third of popular
         let responseCreatePost = await postsAPI.createPost(
             accessToken,
